@@ -7,9 +7,11 @@ import com.example.cemeterywithserver.data.entitites.Grave
 import com.example.cemeterywithserver.data.local.CemeteryDao
 import com.example.cemeterywithserver.data.remote.CemeteryApi
 import com.example.cemeterywithserver.data.remote.requests.AccountRequest
+import com.example.cemeterywithserver.data.remote.responses.ServerResponse
 import com.example.cemeterywithserver.other.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import javax.inject.Inject
 
 class CemRepoImpl @Inject constructor(
@@ -17,14 +19,27 @@ class CemRepoImpl @Inject constructor(
     private val cemeteryApi: CemeteryApi,
     private val context: Application
 ) : CemeteryRepository{
+    override suspend fun login(email: String, password: String): Resource<String> = withContext(Dispatchers.IO){
+        try {
+            val response = cemeteryApi.login(AccountRequest(email, password))
+            if(response.isSuccessful && response.body()!!.successful){
+                Resource.success((response.body()?.message))
+            }else{
+                Resource.error(response.body()?.message ?: response.message(), null)
+            }
+        }catch (e : Exception){
+            Resource.error("Couldn't connect to server. Check your internet connection" , null)
+        }
+    }
 
     override suspend fun register(email: String, password: String): Resource<String>  = withContext(Dispatchers.IO){
         try {
             val response = cemeteryApi.register(AccountRequest(email, password))
-            if(response.isSuccessful){
+            if(response.isSuccessful && response.body()!!.successful){
+
                 Resource.success(response.body()?.message)
             }else {
-                Resource.error(response.message(), null)
+                Resource.error(response.body()?.message ?: response.message(), null)
             }
         }catch (e : Exception){
             Resource.error("Couldn't connect to service. Check network connection", null)

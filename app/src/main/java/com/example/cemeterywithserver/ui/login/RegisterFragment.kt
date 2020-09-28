@@ -57,8 +57,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
                    Status.SUCCESS -> {
                        binding.registerProgressBar.visibility = View.GONE
                        showSnackBar(it.data ?: "Successfully registered!")
-                       Thread.sleep(2000)
-                       findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                       findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
 
                    }
                    Status.ERROR -> {

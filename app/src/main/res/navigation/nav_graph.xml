@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_cemeteryListFragment_to_addEditCemFragment"
             app:destination="@id/addEditCemFragment" />
+        <action
+            android:id="@+id/action_cemeteryListFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/graveDetailFragment"

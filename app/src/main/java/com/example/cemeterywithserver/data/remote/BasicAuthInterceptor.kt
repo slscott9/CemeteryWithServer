@@ -12,8 +12,8 @@ class BasicAuthInterceptor : Interceptor {
         Each interceptor modify requests we make
      */
 
-    val email: String? = null
-    val password: String? = null
+    var email: String? = null
+    var password: String? = null
 
 
     /*
