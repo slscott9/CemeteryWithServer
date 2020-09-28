@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.cemeterywithserver.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_cemeteryListFragment"
+            app:destination="@id/cemeteryListFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditCemFragment"
+        android:name="com.example.cemeterywithserver.ui.addeditcemetery.AddEditCemFragment"
+        android:label="fragment_add_edit_cem"
+        tools:layout="@layout/fragment_add_edit_cem" />
+    <fragment
+        android:id="@+id/addEditGraveFragment"
+        android:name="com.example.cemeterywithserver.ui.addeditgrave.AddEditGraveFragment"
+        android:label="fragment_add_edit_grave"
+        tools:layout="@layout/fragment_add_edit_grave" />
+    <fragment
+        android:id="@+id/cemeteryDetailFragment"
+        android:name="com.example.cemeterywithserver.ui.cemeterydetail.CemeteryDetailFragment"
+        android:label="fragment_cemetery_detail"
+        tools:layout="@layout/fragment_cemetery_detail" >
+        <action
+            android:id="@+id/action_cemeteryDetailFragment_to_graveDetailFragment"
+            app:destination="@id/graveDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cemeteryListFragment"
+        android:name="com.example.cemeterywithserver.ui.cemeterylist.CemeteryListFragment"
+        android:label="fragment_cemetery_list"
+        tools:layout="@layout/fragment_cemetery_list" >
+        <action
+            android:id="@+id/action_cemeteryListFragment_to_cemeteryDetailFragment"
+            app:destination="@id/cemeteryDetailFragment" />
+        <action
+            android:id="@+id/action_cemeteryListFragment_to_addEditCemFragment"
+            app:destination="@id/addEditCemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/graveDetailFragment"
+        android:name="com.example.cemeterywithserver.ui.gravedetail.GraveDetailFragment"
+        android:label="fragment_grave_detail"
+        tools:layout="@layout/fragment_grave_detail" >
+        <action
+            android:id="@+id/action_graveDetailFragment_to_addEditGraveFragment"
+            app:destination="@id/addEditGraveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.cemeterywithserver.ui.login.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+</navigation>
