@@ -8,15 +8,16 @@ import com.example.cemeterywithserver.data.entitites.Grave
 
 @BindingAdapter("setCemeteryName")
 fun TextView.setCemeteryName(item: Cemetery?){
-    item?.cemeteryName?.let {
-        text = item.cemeteryName
+    item?.name?.let {
+        text = item.name
+
     }
 }
 
 @BindingAdapter("setCemeteryLocation")
 fun TextView.setCemeteryLocation(item: Cemetery?){
-    item?.cemeteryLocation?.let {
-        text = item.cemeteryLocation
+    item?.location?.let {
+        text = item.location
     }
 }
 

@@ -27,6 +27,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -40,7 +41,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext appContext: Context)
-            = Room.databaseBuilder(appContext, CemeteryDatabase::class.java, DATABASE_NAME).build()
+            = Room.databaseBuilder(appContext, CemeteryDatabase::class.java, DATABASE_NAME).fallbackToDestructiveMigration().build()
 
 
     @Singleton
@@ -66,6 +67,10 @@ object AppModule {
             .addInterceptor(basicAuthInterceptor)
             .build()
 
+//        val moshi = Moshi.Builder()
+//            .add(KotlinJsonAdapterFactory())
+//            .build()
+
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -73,6 +78,8 @@ object AppModule {
             .build()
             .create(CemeteryApi::class.java)
     }
+
+
 
     @Provides
     fun provideOkHttpclient(): OkHttpClient {

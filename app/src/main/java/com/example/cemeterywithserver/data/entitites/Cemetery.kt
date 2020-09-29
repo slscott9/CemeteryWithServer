@@ -2,20 +2,27 @@ package com.example.cemeterywithserver.data.entitites
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
+import java.util.*
 
+/*
+    When using gson these fields must match the objects fields from the server in order to parse it correctly
+
+    Can use annotations to make different names for the kotlin objects
+ */
 @Entity(tableName = "current_cemetery_table")
 data class Cemetery(
 
     @PrimaryKey(autoGenerate = false)
-    val cemeteryRowId: Int,
+    val cemeteryId: String = UUID.randomUUID().toString(),
 
-    val cemeteryName: String,
+    val name: String,
 
-    val cemeteryLocation: String,
+    val location: String,
 
-    val cemeteryState: String,
+    val state: String,
 
-    val cemeteryCounty: String,
+    val county: String,
 
     val township: String,
 
@@ -25,18 +32,20 @@ data class Cemetery(
 
     val firstYear: String,
 
-    val section: String
+    val section: String,
+
+    @Expose(deserialize = false, serialize = false) //retrofit ingores this parameter when parsing
+    var isSynced: Boolean = false
+
+
 
 )
-
-
-
 
 @Entity(tableName = "current_graves_table")
 data class Grave(
 
     @PrimaryKey(autoGenerate = false)
-    val graveRowId: Int,
+    val graveId: Int,
 
     val cemeteryId: Int,
 
@@ -52,5 +61,9 @@ data class Grave(
 
     val comment: String,
 
-    val graveNumber: String
+    val graveNumber: String,
+
+    @Expose(deserialize = false, serialize = false)
+    var isSynced: Boolean = false
 )
+

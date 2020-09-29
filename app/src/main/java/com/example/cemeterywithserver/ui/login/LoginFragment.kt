@@ -17,6 +17,8 @@ import com.example.cemeterywithserver.data.remote.BasicAuthInterceptor
 import com.example.cemeterywithserver.databinding.FragmentLoginBinding
 import com.example.cemeterywithserver.other.Constants.KEY_LOGGED_IN_EMAIL
 import com.example.cemeterywithserver.other.Constants.KEY_PASSWORD
+import com.example.cemeterywithserver.other.Constants.NO_EMAIL
+import com.example.cemeterywithserver.other.Constants.NO_PASSWORD
 import com.example.cemeterywithserver.other.Status
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,7 +26,6 @@ import kotlin.coroutines.Continuation
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
-
 
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels()
@@ -53,6 +54,11 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(isLoggedIn()){
+            authenticateAPI(currentEmail ?: "" , currentPassword ?: "") //login fragment  checks if logged in if true user stays logged in. false promt loggin
+            redirectLogin() //leads us to cemetery fragment
+        }
+
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
@@ -72,6 +78,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     Status.SUCCESS -> {
                         binding.loginProgressBar.visibility = View.GONE
                         showSnackBar(it.data ?: "Successfully logged in")
+
                         sharedPref.edit().putString(KEY_LOGGED_IN_EMAIL, currentEmail).apply()
                         sharedPref.edit().putString(KEY_PASSWORD, currentPassword).apply()
 
@@ -92,8 +99,15 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     }
 
+    private fun isLoggedIn() : Boolean{
+        //default value NO_EMAIL AND NO_PASSWORD
+        //use return statement to check if user is logged in
+        currentEmail = sharedPref.getString(KEY_LOGGED_IN_EMAIL, NO_EMAIL) ?: NO_EMAIL
+        currentPassword = sharedPref.getString(KEY_PASSWORD, NO_PASSWORD) ?: NO_PASSWORD
+        return currentEmail != NO_EMAIL && currentPassword != NO_PASSWORD
+    }
+
     //function is called we pop loginFragment off of backstack killing it and redirect to cemetery list fragment
-    //TODO replace register fragment with this code
     private fun redirectLogin() {
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.loginFragment, true) //kills login fragment so when back button is pressed from cemetery list we do not go back to login fragment
