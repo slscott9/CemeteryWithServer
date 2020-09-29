@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.cemeterywithserver.BaseFragment
 import com.example.cemeterywithserver.R
@@ -57,8 +58,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
                    Status.SUCCESS -> {
                        binding.registerProgressBar.visibility = View.GONE
                        showSnackBar(it.data ?: "Successfully registered!")
-                       findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-
+                        redirectRegister()
                    }
                    Status.ERROR -> {
                        binding.registerProgressBar.visibility = View.GONE
@@ -72,6 +72,15 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
         })
 
 
+    }
+
+    private fun redirectRegister() {
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.registerFragment, true) //kills login fragment so when back button is pressed from cemetery list we do not go back to login fragment
+            .build()
+        findNavController().navigate(
+            RegisterFragmentDirections.actionRegisterFragmentToLoginFragment(), navOptions
+        )
     }
 
 
