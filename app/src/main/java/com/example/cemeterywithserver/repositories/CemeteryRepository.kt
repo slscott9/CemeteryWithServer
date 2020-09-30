@@ -33,8 +33,6 @@ interface CemeteryRepository {
 
     suspend fun getGravesFromNetwork() : Resource<String>
 
-    suspend fun getNewCemeteriesForNetwork(): List<Cemetery>
-
     fun getAllCemeteries(): Flow<Resource<List<Cemetery>>>
 
     suspend fun insertCemetery(cemetery: Cemetery)
@@ -43,11 +41,11 @@ interface CemeteryRepository {
 
     suspend fun deleteGrave(graveRowId: Int)
 
-    fun getGraveWithRowId(graveRowId: Int): LiveData<Grave>
+    fun getGraveWithId(graveRowId: String): LiveData<Grave>
 
-    fun getCemeteryWithRowId(cemeteryRowId: Int): LiveData<Cemetery>
+    fun getCemeteryWithId(cemeteryId: String): LiveData<Cemetery>
 
-    fun getGravesWithCemeteryId(cemeteryId: Int): LiveData<List<Grave>>
+    fun getGravesWithCemeteryId(cemeteryId: String): LiveData<List<Grave>>
 
 
 }

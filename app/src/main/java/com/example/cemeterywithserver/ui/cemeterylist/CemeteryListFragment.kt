@@ -1,5 +1,6 @@
 package com.example.cemeterywithserver.ui.cemeterylist
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -20,6 +21,8 @@ import com.example.cemeterywithserver.other.Constants.NO_PASSWORD
 import com.example.cemeterywithserver.other.Status
 import com.example.cemeterywithserver.ui.adapters.CemeteryListAdapter
 import com.example.cemeterywithserver.ui.adapters.CemeteryListener
+import com.example.cemeterywithserver.ui.cemeterydetail.CemeteryDetailFragment
+import com.example.cemeterywithserver.ui.cemeterydetail.CemeteryDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -40,7 +43,7 @@ class CemeteryListFragment : BaseFragment(R.layout.fragment_cemetery_list) {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cemetery_list, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -67,7 +70,12 @@ class CemeteryListFragment : BaseFragment(R.layout.fragment_cemetery_list) {
 
     private fun setupRecyclerView() {
          cemeteryListAdapter = CemeteryListAdapter(CemeteryListener {
-            //TODO: use saved state handle for cemeteryDetailViewModel or nav args?
+
+             startActivity(
+                 Intent(requireActivity(), CemeteryDetailFragment::class.java).apply {
+                     putExtra(CemeteryDetailViewModel.CEMETERY_ID, it)
+                 }
+             )
          })
 
         binding.cemeteryListRecyclerView.adapter = cemeteryListAdapter
@@ -98,7 +106,6 @@ class CemeteryListFragment : BaseFragment(R.layout.fragment_cemetery_list) {
                 when(result.status){
                     Status.SUCCESS -> {
                         cemeteryListAdapter.submitList(result.data!!)
-                        Timber.i("Succesfull status in cemetery list fragment")
                     }
                     Status.ERROR -> {
                             //consume event here when something went wrong

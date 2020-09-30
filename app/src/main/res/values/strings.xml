@@ -9,4 +9,47 @@
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="milogout">Logout</string>
+
+
+    <string name="established">"Established: "</string>
+    <string name="location">location</string>
+    <string name="range">Range:</string>
+    <string name="spot">Spot:</string>
+    <string name="section">Section:</string>
+    <string name="birth_date">Birth Date:</string>
+    <string name="death_date">Death Date:</string>
+    <string name="married">Married:</string>
+    <string name="comment">Comment:</string>
+    <string name="grave_number">Grave Number:</string>
+    <string name="add">add</string>
+    <string name="delete">delete</string>
+    <string name="send">send</string>
+    <string name="edit">edit</string>
+    <string name="state">State:</string>
+    <string name="county">County:</string>
+    <string name="township">Township:</string>
+
+
+    <string name="name_hint">Enter cemetery name</string>
+    <string name="location_hint">Enter cemetery location</string>
+    <string name="state_hint">Enter cemetery state</string>
+    <string name="township_hint">Enter cemetery township</string>
+    <string name="rang_hint">Enter cemetery range</string>
+    <string name="section_hint">Enter cemetery section</string>
+    <string name="spot_hint">Enter cemetery spot</string>
+    <string name="gps_hint">Enter cemetery gps coordinates</string>
+    <string name="firstyear_hint">Enter cemetery first year</string>
+    <string name="county_hint">Enter cemetery county</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="cemetery_tab_title">Cemetery Information</string>
+    <string name="grave_tab_title">Graves</string>
+    <string name="first">Enter first name</string>
+    <string name="last">Enter last name</string>
+    <string name="born">Enter birth year</string>
+    <string name="died">Enter death year</string>
+    <string name="gps">Enter gps coordinates</string>
+    <string name="coordinates">Coordinates:</string>
+
+    <string name="title_activity_maps">Map</string>
+    <string name="permission_rationale">permission needed</string>
 </resources>

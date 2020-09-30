@@ -115,10 +115,6 @@ class CemRepoImpl @Inject constructor(
 
     }
 
-    override suspend fun getNewCemeteriesForNetwork(): List<Cemetery> = withContext(Dispatchers.IO){
-         cemeteryDao.getAllCemsForNetwork()
-
-    }
 
     //wrap in resource so we can show states of list of cemeteries
     override fun getAllCemeteries(): Flow<Resource<List<Cemetery>>>{
@@ -160,19 +156,16 @@ class CemRepoImpl @Inject constructor(
 
     }
 
-    override fun getGraveWithRowId(graveRowId: Int): LiveData<Grave> {
-        return cemeteryDao.getGraveWithRowid(graveRowId)
-
+    override fun getGraveWithId(graveRowId: String): LiveData<Grave> {
+        return cemeteryDao.getGraveWithId(graveRowId)
     }
 
-    override fun getCemeteryWithRowId(cemeteryRowId: Int): LiveData<Cemetery> {
-        return cemeteryDao.getCemeteryWithId(cemeteryRowId)
-
+    override fun getCemeteryWithId(cemeteryId: String): LiveData<Cemetery> {
+        return cemeteryDao.getCemeteryWithId(cemeteryId)
     }
 
-    override fun getGravesWithCemeteryId(cemeteryId: Int): LiveData<List<Grave>> {
+    override fun getGravesWithCemeteryId(cemeteryId: String): LiveData<List<Grave>> {
         return cemeteryDao.getGravesWithCemeteryId(cemeteryId)
-
     }
 
 

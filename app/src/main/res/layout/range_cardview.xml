@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="cemeteryViewModel"
+            type="com.example.cemeterywithserver.ui.cemeterydetail.CemeteryDetailViewModel" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        app:cardElevation="8dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/spotDescrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/range"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rangeDescrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/spot"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sectionDescrip" />
+
+            <TextView
+                android:id="@+id/sectionDescrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/section"
+                app:layout_constraintStart_toStartOf="@+id/spotDescrip"
+                app:layout_constraintTop_toBottomOf="@+id/spotDescrip" />
+
+            <TextView
+                android:id="@+id/rangeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{cemeteryViewModel.cemeterySelected.range}"
+                app:layout_constraintStart_toStartOf="@+id/spotTv"
+                app:layout_constraintTop_toBottomOf="@+id/spotTv" />
+
+            <TextView
+                android:id="@+id/spotTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{cemeteryViewModel.cemeterySelected.spot}"
+                app:layout_constraintStart_toStartOf="@+id/sectionTv"
+                app:layout_constraintTop_toBottomOf="@+id/sectionTv" />
+
+            <TextView
+                android:id="@+id/sectionTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@{cemeteryViewModel.cemeterySelected.section}"
+                app:layout_constraintStart_toEndOf="@+id/spotDescrip"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

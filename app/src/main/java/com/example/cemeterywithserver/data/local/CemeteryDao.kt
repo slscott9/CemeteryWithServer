@@ -31,7 +31,7 @@ interface CemeteryDao {
     fun getAllCemeteries(): Flow<List<Cemetery>>
 
     @Query("select * from current_cemetery_table where cemeteryId= :cemeteryId") //tested
-    fun getCemeteryWithId(cemeteryId: Int): LiveData<Cemetery>
+    fun getCemeteryWithId(cemeteryId: String): LiveData<Cemetery>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) //tested
     suspend fun insertGrave(grave: Grave)
@@ -39,20 +39,11 @@ interface CemeteryDao {
     @Query("delete from current_graves_table where graveId= :rowId") //tested
     suspend fun deleteGrave(rowId: Int)
 
-    @Query("select * from current_graves_table where graveId=  :rowId") //tested
-    fun getGraveWithRowid(rowId: Int): LiveData<Grave>
+    @Query("select * from current_graves_table where graveId=  :graveId") //tested
+    fun getGraveWithId(graveId: String): LiveData<Grave>
 
 
     @Query("select * from current_graves_table where cemeteryId= :cemeteryId") //tested
-    fun getGravesWithCemeteryId(cemeteryId: Int) : LiveData<List<Grave>>
+    fun getGravesWithCemeteryId(cemeteryId: String) : LiveData<List<Grave>>
 
-
-    @Query("select max(cemeteryId) from current_cemetery_table") //tested
-    suspend fun getMaxCemeteryRowNum(): Int?
-
-    @Query("select max(graveId) from current_graves_table") //tested
-    suspend fun getMaxGraveRowNum(): Int?
-
-    @Query("select * from current_cemetery_table")
-    suspend fun getAllCemsForNetwork() : List<Cemetery>
 }
