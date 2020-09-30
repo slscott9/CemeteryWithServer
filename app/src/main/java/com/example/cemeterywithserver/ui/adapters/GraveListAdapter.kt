@@ -42,7 +42,7 @@ class GraveDiffUtilCallback: DiffUtil.ItemCallback<Grave>(){
         return oldItem == newItem
     }
 }
-class GraveListListener(val clickListener: (id: Int) -> Unit) {
+class GraveListListener(val clickListener: (id: String) -> Unit) {
     fun onClick(grave: Grave) {
         clickListener(grave.graveId)
     }

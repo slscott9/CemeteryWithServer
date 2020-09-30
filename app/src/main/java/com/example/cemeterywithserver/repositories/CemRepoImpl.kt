@@ -45,6 +45,9 @@ class CemRepoImpl @Inject constructor(
     }
 
     override suspend fun insertCemeteryList(cemList: List<Cemetery>) {
+        Timber.i("InserCemslist called in repo ")
+        Timber.i(cemList.toString())
+
         cemeteryDao.insertAllCemsFromNetwork(*cemList.toTypedArray())
 
     }

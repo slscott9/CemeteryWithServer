@@ -30,12 +30,15 @@ class CemeteryRefreshWorker @WorkerInject constructor(
         try {
 
             val unSynchedCems = repository.getunSynchedCemeteries()
+            Timber.i(unSynchedCems.toString())
             val response = repository.sendNewCemsToNetwork(unSynchedCems)
             if(response.isSuccessful){
 
                 val synchedCemeteries = unSynchedCems.map {
                     it.apply { isSynced = true }
                 }
+                Timber.i(synchedCemeteries.toString())
+
                 repository.insertCemeteryList(synchedCemeteries)
             }
 

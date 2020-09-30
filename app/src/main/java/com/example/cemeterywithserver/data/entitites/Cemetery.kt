@@ -45,7 +45,7 @@ data class Cemetery(
 data class Grave(
 
     @PrimaryKey(autoGenerate = false)
-    val graveId: Int,
+    val graveId: String = UUID.randomUUID().toString(),
 
     val cemeteryId: Int,
 

@@ -22,20 +22,14 @@ fun TextView.setCemeteryLocation(item: Cemetery?){
 }
 
 
-@BindingAdapter("setGraveFirstName")
+@BindingAdapter("setGraveName")
 fun TextView.setGraveFirst(item: Grave?){
     item?.firstName?.let {
-        text = item.firstName
+        val name = "$item.firstName  $item.lastName"
+        text = name
     }
 }
 
-@BindingAdapter("setGraveLast")
-fun TextView.setGraveLast(item: Grave?){
-    item?.lastName?.let {
-        text = item.lastName
-    }
-
-}
 
 @BindingAdapter("setGraveBirth")
 fun TextView.setGraveBirth(item: Grave?){

@@ -21,12 +21,24 @@
         android:id="@+id/addEditCemFragment"
         android:name="com.example.cemeterywithserver.ui.addeditcemetery.AddEditCemFragment"
         android:label="fragment_add_edit_cem"
-        tools:layout="@layout/fragment_add_edit_cem" />
+        tools:layout="@layout/fragment_add_edit_cem" >
+        <argument
+            android:name="editCemFlag"
+            app:argType="boolean" />
+    </fragment>
     <fragment
         android:id="@+id/addEditGraveFragment"
         android:name="com.example.cemeterywithserver.ui.addeditgrave.AddEditGraveFragment"
         android:label="fragment_add_edit_grave"
-        tools:layout="@layout/fragment_add_edit_grave" />
+        tools:layout="@layout/fragment_add_edit_grave" >
+        <argument
+            android:name="editGraveFlag"
+            app:argType="boolean" />
+        <argument
+            android:name="graveId"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
     <fragment
         android:id="@+id/cemeteryDetailFragment"
         android:name="com.example.cemeterywithserver.ui.cemeterydetail.CemeteryDetailFragment"
@@ -35,6 +47,12 @@
         <action
             android:id="@+id/action_cemeteryDetailFragment_to_graveDetailFragment"
             app:destination="@id/graveDetailFragment" />
+        <argument
+            android:name="cemeteryId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_cemeteryDetailFragment_to_addEditGraveFragment"
+            app:destination="@id/addEditGraveFragment" />
     </fragment>
     <fragment
         android:id="@+id/cemeteryListFragment"
@@ -59,6 +77,9 @@
         <action
             android:id="@+id/action_graveDetailFragment_to_addEditGraveFragment"
             app:destination="@id/addEditGraveFragment" />
+        <argument
+            android:name="graveId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"

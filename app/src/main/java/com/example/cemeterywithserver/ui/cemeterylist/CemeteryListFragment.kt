@@ -52,6 +52,11 @@ class CemeteryListFragment : BaseFragment(R.layout.fragment_cemetery_list) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         subscribeToObservers()
+
+        binding.addCemeteryFAB.setOnClickListener {
+            val addCemFlag = false
+            findNavController().navigate(CemeteryListFragmentDirections.actionCemeteryListFragmentToAddEditCemFragment(false))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -70,12 +75,8 @@ class CemeteryListFragment : BaseFragment(R.layout.fragment_cemetery_list) {
 
     private fun setupRecyclerView() {
          cemeteryListAdapter = CemeteryListAdapter(CemeteryListener {
-
-             startActivity(
-                 Intent(requireActivity(), CemeteryDetailFragment::class.java).apply {
-                     putExtra(CemeteryDetailViewModel.CEMETERY_ID, it)
-                 }
-             )
+             Timber.i("cemetery id is $it")
+             findNavController().navigate(CemeteryListFragmentDirections.actionCemeteryListFragmentToCemeteryDetailFragment(it))
          })
 
         binding.cemeteryListRecyclerView.adapter = cemeteryListAdapter
@@ -105,11 +106,14 @@ class CemeteryListFragment : BaseFragment(R.layout.fragment_cemetery_list) {
 
                 when(result.status){
                     Status.SUCCESS -> {
+                        binding.loadCemsProgressBar.visibility = View.GONE
                         cemeteryListAdapter.submitList(result.data!!)
                     }
                     Status.ERROR -> {
                             //consume event here when something went wrong
                         //let block is executed only if an error occurs
+                        binding.loadCemsProgressBar.visibility = View.GONE
+
                         event.getContentIfNotHandled()?.let { errorResource ->
                             errorResource.message?.let {message ->
                                 showSnackBar(message)
@@ -119,14 +123,14 @@ class CemeteryListFragment : BaseFragment(R.layout.fragment_cemetery_list) {
                             cemeteryListAdapter.submitList(cemList)
                         }
 
-                        Timber.i("Error status in cemetery list fragment")
 
                     }
                     Status.LOADING -> {
+                        binding.loadCemsProgressBar.visibility = View.VISIBLE
+
                         result.data?.let {cemList ->
                             cemeteryListAdapter.submitList(cemList)
                         }
-                        Timber.i("Loading status in cemetery list fragment")
                     }
                 }
             }
