@@ -47,14 +47,8 @@ class CemeteryListFragment : BaseFragment(R.layout.fragment_cemetery_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         setupRecyclerView()
-
         subscribeToObservers()
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
