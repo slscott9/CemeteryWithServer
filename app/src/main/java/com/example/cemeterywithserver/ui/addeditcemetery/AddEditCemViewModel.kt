@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cemeterywithserver.data.entitites.Cemetery
 import com.example.cemeterywithserver.repositories.CemeteryRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AddEditCemViewModel @ViewModelInject constructor(
     private val repository: CemeteryRepository
@@ -19,6 +21,12 @@ class AddEditCemViewModel @ViewModelInject constructor(
         things launched inside of viewModelScope only execute while the view model is active
         since viewModelScope is attached and aware of the view models lifecycle
      */
+
+    fun insertNewCem(cemetery: Cemetery) {
+        GlobalScope.launch {
+            repository.insertCemetery(cemetery)
+        }
+    }
 
 
 }

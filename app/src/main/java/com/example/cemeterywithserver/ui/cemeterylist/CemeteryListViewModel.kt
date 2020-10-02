@@ -28,11 +28,11 @@ class CemeteryListViewModel @ViewModelInject constructor(
 
     }.switchMap {
 
-        MutableLiveData(Event(it)) //handles event once
+        MutableLiveData(Event(it)) //wrap in Event class to use it's  methods to make sure the data is handled once and not redone on rotation
 
 
     }
-    val allCemteries: LiveData<Event<Resource<List<Cemetery>>>> = _allCemeteries
+    val allCemteries: LiveData<Event<Resource<List<Cemetery>>>> = _allCemeteries //observe from cemetery list fragment use Event class for rotation handling and REsource class for state of live data
 
     fun syncCemeteryList() = _forceUpdate.postValue(true)
 

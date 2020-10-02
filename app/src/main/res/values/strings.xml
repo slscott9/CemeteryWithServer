@@ -16,11 +16,11 @@
     <string name="range">Range:</string>
     <string name="spot">Spot:</string>
     <string name="section">Section:</string>
-    <string name="birth_date">Birth Date:</string>
-    <string name="death_date">Death Date:</string>
-    <string name="married">Married:</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="death_date">Death Date</string>
+    <string name="married">Marriage year</string>
     <string name="comment">Comment:</string>
-    <string name="grave_number">Grave Number:</string>
+    <string name="grave_number">Grave Number</string>
     <string name="add">add</string>
     <string name="delete">delete</string>
     <string name="send">send</string>

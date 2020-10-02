@@ -15,15 +15,16 @@ class CemeteryRefreshWorker @WorkerInject constructor(
     private val repository: CemeteryRepository
 ) : CoroutineWorker(context, workerParameters) {
 
-//Coroutine worker by default runs on Dispatchers.default
 
     companion object {
-        const val WORK_NAME = "cemetery_refresh_worker"
+        const val CEMETERY_WORKER = "cemetery_refresh_worker"
     }
     /*
 
         get all cemeteries that are not synched, send them to the server.
         if success set all cemeteries to synched and re insert them into database
+
+        Runs on Dispatcher.default unless specified otherwise
  */
     override suspend fun doWork(): Result {
         Timber.i("Starting doWork")
@@ -31,8 +32,8 @@ class CemeteryRefreshWorker @WorkerInject constructor(
 
             val unSynchedCems = repository.getunSynchedCemeteries()
             Timber.i(unSynchedCems.toString())
-            val response = repository.sendNewCemsToNetwork(unSynchedCems)
-            if(response.isSuccessful){
+            val updateCemsResponse = repository.sendNewCemsToNetwork(unSynchedCems)
+            if(updateCemsResponse.isSuccessful){
 
                 val synchedCemeteries = unSynchedCems.map {
                     it.apply { isSynced = true }
@@ -40,6 +41,16 @@ class CemeteryRefreshWorker @WorkerInject constructor(
                 Timber.i(synchedCemeteries.toString())
 
                 repository.insertCemeteryList(synchedCemeteries)
+            }
+
+            val unSynchedGraves = repository.getunSynchedGraves()
+            val updateGravesResponse = repository.sendNewGravesToNetwork(unSynchedGraves)
+            if(updateGravesResponse.isSuccessful) {
+                val synchedGraves = unSynchedGraves.map {
+                    it.apply { isSynced = true }
+                }
+                Timber.i(synchedGraves.toString())
+                repository.insertGraveList(synchedGraves)
             }
 
         } catch (e: Exception) {

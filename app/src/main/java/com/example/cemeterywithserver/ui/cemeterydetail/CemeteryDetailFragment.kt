@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.cemeterywithserver.BaseFragment
@@ -41,8 +42,13 @@ class CemeteryDetailFragment : BaseFragment(R.layout.fragment_cemetery_detail) {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.cemeteryDetailViewModel = viewModel
 
-        viewModel.setCemeteryId(args.cemeteryId)
+        args.cemeteryId?.let {
+            viewModel.setCemeteryId(args.cemeteryId!!)
+
+        }
         Timber.i("cemetery id is ${args.cemeteryId}")
+
+
 
 
         return binding.root
@@ -58,10 +64,18 @@ class CemeteryDetailFragment : BaseFragment(R.layout.fragment_cemetery_detail) {
 
         })
 
+        viewModel.graveList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                graveListAdapter.submitList(it)
+            }
+        })
+
         binding.graveRecyclerView.adapter = graveListAdapter
 
         binding.addGraveChip.setOnClickListener {
-            findNavController().navigate(CemeteryDetailFragmentDirections.actionCemeteryDetailFragmentToAddEditGraveFragment(false))
+            findNavController().navigate(
+                CemeteryDetailFragmentDirections.actionCemeteryDetailFragmentToAddEditGraveFragment(
+                    false, cemeteryId = args.cemeteryId, graveId = null)) //graveId is null becauase we are adding new grave in the case
         }
 
 

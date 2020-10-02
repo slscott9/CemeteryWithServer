@@ -26,35 +26,43 @@ class CemRepoImpl @Inject constructor(
     private val context: Application
 ) : CemeteryRepository{
 
+    /*
+        withContext for suspend functions that need to return something
+
+        Room and retrofit are main safe and handle dispatcher for you - do not need withContext
+     */
+
+    //Called from worker on Dispatcher.default which should be okay even with database inserts
     override suspend fun getunSynchedCemeteries(): List<Cemetery> {
-        return cemeteryDao.getUnSynchedCemeteries()
+         return cemeteryDao.getUnSynchedCemeteries()
     }
 
     override suspend fun getunSynchedGraves(): List<Grave> {
-        return cemeteryDao.getUnSynchedGraves()
+         return cemeteryDao.getUnSynchedGraves()
 
     }
 
     override suspend fun sendNewCemsToNetwork(cemList: List<Cemetery>) : Response<ServerResponse>{
-
         return cemeteryApi.updateCemList(AddCemRequest(cemList))
     }
 
-    override suspend fun sendNewGravesToNetwork(graveList: List<Grave>) : Response<ServerResponse>{
-        return cemeteryApi.updateGraveList(AddGravesRequest(graveList))
+    override suspend fun sendNewGravesToNetwork(graveList: List<Grave>) : Response<ServerResponse> {
+         return cemeteryApi.updateGraveList(AddGravesRequest(graveList))
     }
 
-    override suspend fun insertCemeteryList(cemList: List<Cemetery>) {
-        Timber.i("InserCemslist called in repo ")
-        Timber.i(cemList.toString())
-
+    override suspend fun insertCemeteryList(cemList: List<Cemetery>)  {
         cemeteryDao.insertAllCemsFromNetwork(*cemList.toTypedArray())
 
     }
 
-    override suspend fun insertGraveList(graveList: List<Grave>) {
+    override suspend fun insertGraveList(graveList: List<Grave>)  {
         cemeteryDao.insertAllGravesFromNetwork(*graveList.toTypedArray())
     }
+
+
+
+
+//called from viewModelScope - coroutines running are canceled when loginViewModel is destroyed
 
     override suspend fun login(email: String, password: String): Resource<String> = withContext(Dispatchers.IO){
         try {
@@ -69,7 +77,7 @@ class CemRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun register(email: String, password: String): Resource<String>  = withContext(Dispatchers.IO){
+    override suspend fun register(email: String, password: String): Resource<String> = withContext(Dispatchers.IO) {
         try {
             val response = cemeteryApi.register(AccountRequest(email, password))
             if(response.isSuccessful && response.body()!!.successful){
@@ -84,7 +92,7 @@ class CemRepoImpl @Inject constructor(
     }
 
 
-
+//not called from anywhere - as of right now NetworkBound method takes care of refresh strategy
     override suspend fun getCemeteriesFromNetwork(): Resource<String> = withContext(Dispatchers.IO) {
         try {
             val response = cemeteryApi.getAllCems()
@@ -101,7 +109,6 @@ class CemRepoImpl @Inject constructor(
         }
 
     }
-
     override suspend fun getGravesFromNetwork(): Resource<String> = withContext(Dispatchers.IO) {
         try {
             val response = cemeteryApi.getAllGraves()
@@ -119,7 +126,8 @@ class CemRepoImpl @Inject constructor(
     }
 
 
-    //wrap in resource so we can show states of list of cemeteries
+    //Flow allows reactive ui - wrap in resource so we can show states of list of cemeteries
+
     override fun getAllCemeteries(): Flow<Resource<List<Cemetery>>>{
         Timber.i("in get all cemeteries  ")
 
@@ -132,7 +140,6 @@ class CemRepoImpl @Inject constructor(
             },
             saveFetchResult = {
                 it.body()?.let {networkCemList ->
-                    Timber.i("in save fethc result")
                     insertCemeteryList(networkCemList)
                 }
             },
@@ -144,12 +151,13 @@ class CemRepoImpl @Inject constructor(
 
     }
 
-    override suspend fun insertCemetery(cemetery: Cemetery) = withContext(Dispatchers.IO){
+
+    override suspend fun insertCemetery(cemetery: Cemetery){
         cemeteryDao.insertCemetery(cemetery)
 
     }
 
-    override suspend fun insertGrave(grave: Grave) = withContext(Dispatchers.IO){
+    override suspend fun insertGrave(grave: Grave) {
         cemeteryDao.insertGrave(grave)
 
     }
@@ -158,6 +166,8 @@ class CemRepoImpl @Inject constructor(
         cemeteryDao.deleteGrave(graveRowId)
 
     }
+
+    //Return live data dispatcher are taken care of for you
 
     override fun getGraveWithId(graveRowId: String): LiveData<Grave> {
         return cemeteryDao.getGraveWithId(graveRowId)

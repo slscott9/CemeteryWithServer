@@ -40,7 +40,8 @@ class CemeteryApplication : Application(), Configuration.Provider{
                 .build()
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            CemeteryRefreshWorker.WORK_NAME,
+
+            CemeteryRefreshWorker.CEMETERY_WORKER,
             ExistingPeriodicWorkPolicy.REPLACE, //keep means if we have created this work before just keep it, do not create new work again
             repeatingRequest
         )

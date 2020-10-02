@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.cemeterywithserver.data.entitites.Cemetery
 import com.example.cemeterywithserver.data.entitites.Grave
 
-@Database(entities = [Cemetery::class, Grave::class], version = 8)
+@Database(entities = [Cemetery::class, Grave::class], version = 11)
 abstract class CemeteryDatabase : RoomDatabase() {
 
     abstract fun cemeteryDao(): CemeteryDao

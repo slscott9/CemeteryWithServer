@@ -51,6 +51,7 @@
                         android:id="@+id/locationEtLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        app:startIconDrawable="@drawable/ic_baseline_add_location_24"
                         app:layout_constraintEnd_toEndOf="@+id/nameEtLayout"
                         app:layout_constraintStart_toStartOf="@+id/nameEtLayout"
                         app:layout_constraintTop_toBottomOf="@id/nameEtLayout">
@@ -140,6 +141,7 @@
                         app:layout_constraintStart_toStartOf="@id/rangeEtLayout"
                         app:layout_constraintTop_toBottomOf="@id/rangeEtLayout">
 
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etSection"
                             android:hint="@string/section_hint"
@@ -160,6 +162,23 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etFirstYear"
                             android:hint="@string/firstyear_hint"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/spotEtLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/firstYearEtLayout"
+                        app:layout_constraintStart_toStartOf="@id/firstYearEtLayout"
+                        app:layout_constraintTop_toBottomOf="@id/firstYearEtLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etSpot"
+                            android:hint="@string/spot_hint"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 

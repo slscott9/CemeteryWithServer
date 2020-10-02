@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.cemeterywithserver.BaseFragment
 import com.example.cemeterywithserver.R
+import com.example.cemeterywithserver.data.entitites.Grave
 import com.example.cemeterywithserver.databinding.FragmentGraveDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +30,10 @@ class GraveDetailFragment : BaseFragment(R.layout.fragment_grave_detail) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_grave_detail, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+
         viewModel.setGraveId(args.graveId)
+        binding.viewModel = viewModel
+
         return binding.root
     }
 
@@ -38,16 +42,14 @@ class GraveDetailFragment : BaseFragment(R.layout.fragment_grave_detail) {
 
         binding.editChip.setOnClickListener {
             findNavController().navigate(GraveDetailFragmentDirections.actionGraveDetailFragmentToAddEditGraveFragment(
-                graveId = args.graveId,
-                editGraveFlag = true
+                graveId = args.graveId, //grave id is not null because we are updating a current grave
+                editGraveFlag = true,
+                cemeteryId = null //null becauase
+
             ))
         }
 
-        viewModel.graveSelected.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                binding.grave = it
-            }
-        })
+
     }
 
 }

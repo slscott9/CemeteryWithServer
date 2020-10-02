@@ -12,9 +12,22 @@ class CemeteryDetailViewModel @ViewModelInject constructor(
 
 
     private val _cemeteryId = MutableLiveData<String>()
-    val cemeterySelected = Transformations.switchMap(_cemeteryId) {
+    val cemeterySelected = _cemeteryId.switchMap {
         repository.getCemeteryWithId(it)
     }
+    val graveList = _cemeteryId.switchMap {
+        repository.getGravesWithCemeteryId(it)
+    }
+
+    /*
+        if repository did not return live data use this to make it live data to observe
+
+        	private val itemId = MutableLiveData<String>()
+	        val result = itemId.switchMap {
+		            liveData { emit(fetchItem(it))
+		     }
+}
+     */
 
 
 

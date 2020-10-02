@@ -11,7 +11,8 @@ import java.util.*
     Can use annotations to make different names for the kotlin objects
  */
 @Entity(tableName = "current_cemetery_table")
-data class Cemetery(
+data class
+Cemetery(
 
     @PrimaryKey(autoGenerate = false)
     val cemeteryId: String = UUID.randomUUID().toString(),
@@ -47,7 +48,7 @@ data class Grave(
     @PrimaryKey(autoGenerate = false)
     val graveId: String = UUID.randomUUID().toString(),
 
-    val cemeteryId: Int,
+    val cemeteryId: String,
 
     val firstName: String,
 
