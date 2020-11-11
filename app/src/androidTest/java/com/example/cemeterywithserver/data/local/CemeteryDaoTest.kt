@@ -41,7 +41,7 @@ class CemeteryDaoTest {
     fun tearDown() {
         database.close()
 
-    }xz
+    }
 
     @Test
     fun check_getUnsyncedCemeteries_should_return_list()= runBlockingTest {

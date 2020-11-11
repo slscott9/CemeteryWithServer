@@ -10,6 +10,16 @@ class CemeteryDetailViewModel @ViewModelInject constructor(
     private val repository: CemeteryRepository,
 ) : ViewModel() {
 
+    /*
+        private val _cemeteryId = MutableLiveData<String>()
+
+        val cemeterySelected = _cemeteryId.switchMap {
+            emit(repository.getCemWithId(it)
+        }
+
+        I think repo and dao would just return a normal Cemetery not wrapped in live data
+     */
+
 
     private val _cemeteryId = MutableLiveData<String>()
     val cemeterySelected = _cemeteryId.switchMap {

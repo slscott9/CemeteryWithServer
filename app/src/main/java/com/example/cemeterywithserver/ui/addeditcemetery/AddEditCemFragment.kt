@@ -135,10 +135,8 @@ class AddEditCemFragment : BaseFragment(R.layout.fragment_add_edit_cem) {
                     spot = binding.etSpot.text.toString()
 
                 )
-
                 viewModel.insertNewCem(newCem)
                 redirectToCemeteryListFragment()
-
             }
         }
     }

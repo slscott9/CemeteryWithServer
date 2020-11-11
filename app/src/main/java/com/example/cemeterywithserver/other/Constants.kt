@@ -13,7 +13,8 @@ object Constants {
         Even though server is running on local host, since we lauched our app on a device local host refers to the android deviece not the pc
         solution is use our windows ipv4 address
      */
-    const val BASE_URL = "https://192.168.1.3:8082"
+//    const val BASE_URL = "https://192.168.1.3:8082"
+    const val BASE_URL = "https://192.168.1.11:8082"
 
     const val ENCRYPTED_SHARED_PREF_NAME = "encr_shared_pref"
 
